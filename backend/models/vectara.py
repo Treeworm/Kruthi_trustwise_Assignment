@@ -6,11 +6,10 @@ class VectaraModel:
         self.model_name = "microsoft/deberta-large-mnli"
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
-        self.model.eval()  # Set the model to evaluation mode
+        self.model.eval()  
     
     def get_score(self, text):
-        # For MNLI model, we'll check if the text is "entailed" (likely true)
-        # by comparing it with itself (if it's self-consistent)
+       
         inputs = self.tokenizer(
             text,
             text,  # Compare text with itself
@@ -22,8 +21,8 @@ class VectaraModel:
         
         with torch.no_grad():
             outputs = self.model(**inputs)
-            # Get probability for entailment (index 2 in MNLI)
+           
             probs = torch.softmax(outputs.logits, dim=1)
-            entailment_score = float(probs[0][2])  # Higher score means less likely to be hallucination
+            entailment_score = float(probs[0][2]) 
             
         return entailment_score
