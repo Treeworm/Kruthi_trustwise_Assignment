@@ -1,14 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from models.vectara import VectaraModel  # Removed the dot
-from models.toxicity import ToxicityModel  # Removed the dot
-from database import Database  # Removed the dot
+from models.vectara import VectaraModel 
+from models.toxicity import ToxicityModel  
+from database import Database 
 from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
 
-# Initialize models and database
+
 vectara_model = VectaraModel()
 toxicity_model = ToxicityModel()
 db = Database()
@@ -22,13 +22,13 @@ def analyze_text():
         if not text:
             return jsonify({'error': 'No text provided'}), 400
         
-        # Get scores from models
+       
         scores = {
             'vectara': vectara_model.get_score(text),
             'toxicity': toxicity_model.get_score(text)
         }
         
-        # Save to database
+        
         db.insert_score(text, scores)
         
         return jsonify(scores), 200
