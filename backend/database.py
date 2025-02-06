@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from datetime import datetime
-from config import Config  # Removed the dot
+from config import Config 
 
 class Database:
     def __init__(self):
